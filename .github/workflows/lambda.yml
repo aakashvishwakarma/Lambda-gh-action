@@ -1,4 +1,4 @@
-name: CI
+name: lambda fucntion creation
 
 # Controls when the workflow will run
 on:
