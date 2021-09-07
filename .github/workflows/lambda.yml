@@ -38,4 +38,4 @@ jobs:
       # Role creation usng AWS CLI
       - name: create zip 
         run: |
-          zip //lambda_function.py
+          zip -r lambda_function.zip lambda_function.py
