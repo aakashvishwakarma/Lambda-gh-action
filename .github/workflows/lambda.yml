@@ -35,7 +35,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      # Role creation usng AWS CLI
-      - name: create zip 
+      # Role creation usng AWS CLI either we can use this way to zip our file and use it's zip output in aws cli for creation of lambda
+#       - name: create zip   
+#         run: |
+#           zip -r lambda_function.zip lambda_function.py
+      - name: Create lambda Function
         run: |
-          zip -r lambda_function.zip lambda_function.py
+            aws lambda create-function \
+            --function-name my-function \
+            --runtime python3.6 \
+            --zip-file fileb://lambda_function.zip \
+            --handler lambda_function.lambda_handler \
+            --role arn:aws:iam::242307434447:role/Test-Role          
+          
