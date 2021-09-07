@@ -45,5 +45,7 @@ jobs:
             --runtime python3.6 \
             --zip-file fileb://lambda_function.zip \
             --handler lambda_function.lambda_handler \
-            --role arn:aws:iam::242307434447:role/Test-Role          
+            --role ${{env.Role}}
+        env:
+          Role: ${{github.event.inputs.infra_env}}
           
