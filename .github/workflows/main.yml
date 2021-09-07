@@ -37,11 +37,22 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      # Role creation usng AWS CLI
       - name: create iam role with trust policy
         run: |
           aws iam create-role --role-name Test-Role --assume-role-policy-document file://trust-policy.json 
-#       - id: install-aws-cli
-#         uses: unfor19/install-aws-cli-action@v1
-#         with:
-#             version: 1
+      
+      - name: attach user manager policy
+        run: |
+          aws iam put-role-policy --role-name Test-Role --policy-name ExamplePolicy --policy-document file://my-policy.json
+      
+      - name: attach AWS policy to role
+        run: |
+          aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess --role-name Test-Role
+      - name: attach AWS policy to role
+        run: |
+          aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess --role-name Test-Role
+      - name: Get Role ARN
+        run: |
+          aws iam get-role --role-name Test-Role  
       
