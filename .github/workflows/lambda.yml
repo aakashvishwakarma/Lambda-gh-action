@@ -1,3 +1,4 @@
+# This workflow help you to create lambda function using aws cli and in workflow dispact put your role arn that you have created with IAMrolecreation workflow.
 name: lambda fucntion creation
 
 # Controls when the workflow will run
@@ -27,6 +28,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
             python-version: '3.6'
+            
       # Runs a set of commands using the runners shell
       - name: Configure AWS credentials from Production account
         uses: aws-actions/configure-aws-credentials@v1
@@ -34,10 +36,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+          
       # Role creation usng AWS CLI either we can use this way to zip our file and use it's zip output in aws cli for creation of lambda
 #       - name: create zip   
 #         run: |
 #           zip -r lambda_function.zip lambda_function.py
+      # Step to craete lambda function using aws cli.
       - name: Create lambda Function
         run: |
             aws lambda create-function \
